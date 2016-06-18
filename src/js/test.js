@@ -1,3 +1,4 @@
-/**
- * Created by mdd23 on 6/18/2016.
- */
+var aFunction = function () {
+    var greeting = 'Hello!';
+    console.log(greeting);
+};

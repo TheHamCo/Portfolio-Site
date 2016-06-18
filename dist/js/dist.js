@@ -1,0 +1,1 @@
+var aFunction=function(){var n="Hello!";console.log(n)};aFunction();

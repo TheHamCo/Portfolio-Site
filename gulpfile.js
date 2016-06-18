@@ -6,9 +6,12 @@ var  gulp           = require('gulp')
     ,uglify         = require('gulp-uglify')
     ,rename         = require('gulp-rename');
 
+/*Javascript files*/
+var jsFiles = ['./src/js/test.js', './src/js/test2.js'];
+
 /*Lint, concatenate, and minify custom Javascript*/
 gulp.task('custom-js', function () {
-    return gulp.src(['./src/js/test.js', './src/js/test2.js'])
+    return gulp.src(jsFiles)
         .pipe(eslint())
         .pipe(eslint.format())
         .pipe(eslint.failAfterError())
@@ -28,16 +31,20 @@ gulp.task('js',['custom-js','vendor-js']);
 
 // create a task that ensures the `js` task is complete before
 // reloading browsers
-gulp.task('js-watch', ['js'], browserSync.reload);
+gulp.task('js-watch', ['custom-js'], function () {
+    //Anonymous function fix from
+    //http://stackoverflow.com/questions/29801070/gulp-browser-sync-only-works-once
+    browserSync.reload();
+});
 
 /*Browsersync watches JS and HTML*/
-gulp.task('serve', function () {
+gulp.task('serve', ['custom-js'], function () {
     browserSync.init({
         server: {
             baseDir: "./dist"
         }
     });
 
-    gulp.watch("js/*.js", ['js-watch']);
+    gulp.watch(jsFiles, ['js-watch']);
     gulp.watch("./dist/*.html", browserSync.reload);
 });

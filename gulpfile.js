@@ -9,7 +9,8 @@ var  gulp           = require('gulp')
     ,sass           = require('gulp-sass')
     ,scsslint       = require('gulp-scss-lint')
     ,autoprefixer   = require('gulp-autoprefixer')
-    ,cleanCSS       = require('gulp-clean-css');
+    ,cleanCSS       = require('gulp-clean-css')
+    ,concatCss      = require('gulp-concat-css');
 
 
 /*--------------------------------*/
@@ -55,6 +56,11 @@ gulp.task('custom-css', function () {
         .pipe(rename('home.min.css'))
         .pipe(gulp.dest('./dist/css'));
 });
+gulp.task('vendor-css', function () {
+    return gulp.src(['bower_components/bootstrap/dist/css/bootstrap.min.css'])
+        .pipe(gulp.dest('./dist/css'));
+});
+gulp.task('css',['custom-css', 'vendor-css']);
 /*--------------------------------*/
 /*./(S)CSS TASKS*/
 /*--------------------------------*/
@@ -74,7 +80,7 @@ gulp.task('css-watch', ['custom-css'], function () {
 });
 
 /*Main Browsersync task*/
-gulp.task('serve', ['js', 'custom-css'], function () {
+gulp.task('serve', ['js', 'css'], function () {
     browserSync.init({
         server: {
             baseDir: "./dist"

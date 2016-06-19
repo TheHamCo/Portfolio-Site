@@ -68,6 +68,9 @@ gulp.task('css',['custom-css', 'vendor-css']);
 
 
 
+/*--------------------------------*/
+/*BROWSER SYNC*/
+/*--------------------------------*/
 /*Browsersync watches JS, SCSS, and HTML*/
 // create 2 tasks that ensure the custom JS and CS
 // tasks are complete before reloading browsers

@@ -56,9 +56,11 @@ gulp.task('custom-css', function () {
     return gulp.src('./src/scss/main.scss')
         .pipe(sass({includePaths: ['./src/scss']}).on('error',sass.logError))
         .pipe(autoprefixer({
-            browsers: ['last 2 versions']
-            //,cascade: false
+             browsers   : ['last 2 versions']
+            ,cascade    : false
         }))
+        .pipe(cleanCSS({compatibility: 'ie8'}))
+        .pipe(rename('home.min.css'))
         .pipe(gulp.dest('./dist/css'));
 });
 /*--------------------------------*/

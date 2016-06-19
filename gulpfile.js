@@ -55,6 +55,10 @@ gulp.task('js-watch', ['custom-js'], function () {
 gulp.task('custom-css', function () {
     return gulp.src('./src/scss/main.scss')
         .pipe(sass({includePaths: ['./src/scss']}).on('error',sass.logError))
+        .pipe(autoprefixer({
+            browsers: ['last 2 versions']
+            //,cascade: false
+        }))
         .pipe(gulp.dest('./dist/css'));
 });
 /*--------------------------------*/

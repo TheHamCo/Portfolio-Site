@@ -36,14 +36,6 @@ gulp.task('vendor-js', function () {
 });
 /*COMPLETE JS TASK*/
 gulp.task('js',['custom-js','vendor-js']);
-
-// create a task that ensures the `js` task is complete before
-// reloading browsers
-gulp.task('js-watch', ['custom-js'], function () {
-    //Anonymous function fix from
-    //http://stackoverflow.com/questions/29801070/gulp-browser-sync-only-works-once
-    browserSync.reload();
-});
 /*--------------------------------*/
 /*./JAVASCRIPT TASKS*/
 /*--------------------------------*/
@@ -67,8 +59,22 @@ gulp.task('custom-css', function () {
 /*./(S)CSS TASKS*/
 /*--------------------------------*/
 
-/*Browsersync watches JS and HTML*/
-gulp.task('serve', ['js'], function () {
+
+
+/*Browsersync watches JS, SCSS, and HTML*/
+// create 2 tasks that ensure the custom JS and CS
+// tasks are complete before reloading browsers
+gulp.task('js-watch', ['custom-js'], function () {
+    //Anonymous function fix from
+    //http://stackoverflow.com/questions/29801070/gulp-browser-sync-only-works-once
+    browserSync.reload();
+});
+gulp.task('css-watch', ['custom-css'], function () {
+    browserSync.reload();
+});
+
+/*Main Browsersync task*/
+gulp.task('serve', ['js', 'custom-css'], function () {
     browserSync.init({
         server: {
             baseDir: "./dist"
@@ -76,5 +82,6 @@ gulp.task('serve', ['js'], function () {
     });
 
     gulp.watch(jsFiles, ['js-watch']);
+    gulp.watch('./src/scss/**/*.scss', ['css-watch']);
     gulp.watch("./dist/*.html", browserSync.reload);
 });

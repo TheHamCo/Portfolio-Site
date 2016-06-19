@@ -58,6 +58,7 @@ gulp.task('custom-css', function () {
 });
 gulp.task('vendor-css', function () {
     return gulp.src(['bower_components/bootstrap/dist/css/bootstrap.min.css'])
+        .pipe(rename('vendor.min.css'))
         .pipe(gulp.dest('./dist/css'));
 });
 gulp.task('css',['custom-css', 'vendor-css']);

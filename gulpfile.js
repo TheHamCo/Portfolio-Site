@@ -1,14 +1,22 @@
 var  gulp           = require('gulp')
     ,browserSync    = require('browser-sync').create()
+    ,rename         = require('gulp-rename')
     /*Javascript stuff*/
     ,eslint         = require('gulp-eslint')
     ,concat         = require('gulp-concat')
     ,uglify         = require('gulp-uglify')
-    ,rename         = require('gulp-rename');
+    /*(S)CSS stuff*/
+    ,sass           = require('gulp-sass')
+    ,scsslint       = require('gulp-scss-lint')
+    ,autoprefixer   = require('gulp-autoprefixer')
+    ,cleanCSS       = require('gulp-clean-css');
 
+
+/*--------------------------------*/
+/*JAVASCRIPT TASKS*/
+/*--------------------------------*/
 /*Javascript files*/
 var jsFiles = ['./src/js/test.js', './src/js/test2.js'];
-
 /*Lint, concatenate, and minify custom Javascript*/
 gulp.task('custom-js', function () {
     return gulp.src(jsFiles)
@@ -36,6 +44,22 @@ gulp.task('js-watch', ['custom-js'], function () {
     //http://stackoverflow.com/questions/29801070/gulp-browser-sync-only-works-once
     browserSync.reload();
 });
+/*--------------------------------*/
+/*./JAVASCRIPT TASKS*/
+/*--------------------------------*/
+
+
+/*--------------------------------*/
+/*(S)CSS TASKS*/
+/*--------------------------------*/
+gulp.task('custom-css', function () {
+    return gulp.src('./src/scss/main.scss')
+        .pipe(sass({includePaths: ['./src/scss']}).on('error',sass.logError))
+        .pipe(gulp.dest('./dist/css'));
+});
+/*--------------------------------*/
+/*./(S)CSS TASKS*/
+/*--------------------------------*/
 
 /*Browsersync watches JS and HTML*/
 gulp.task('serve', ['js'], function () {

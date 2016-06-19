@@ -1,1 +1,2 @@
 aFunction();
+console.log('no');

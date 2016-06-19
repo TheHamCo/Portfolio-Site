@@ -15,7 +15,7 @@ gulp.task('custom-js', function () {
         .pipe(eslint())
         .pipe(eslint.format())
         .pipe(eslint.failAfterError())
-        .pipe(concat('dist.js'))
+        .pipe(concat('dist.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest('./dist/js'))
 });
@@ -23,7 +23,7 @@ gulp.task('custom-js', function () {
 /*(For now, only using jQuery, so only copies)*/
 gulp.task('vendor-js', function () {
     return gulp.src(['bower_components/jquery/dist/jquery.min.js'])
-        .pipe(rename('vendor.js'))
+        .pipe(rename('vendor.min.js'))
         .pipe(gulp.dest('./dist/js'));
 });
 /*COMPLETE JS TASK*/
@@ -38,7 +38,7 @@ gulp.task('js-watch', ['custom-js'], function () {
 });
 
 /*Browsersync watches JS and HTML*/
-gulp.task('serve', ['custom-js'], function () {
+gulp.task('serve', ['js'], function () {
     browserSync.init({
         server: {
             baseDir: "./dist"
